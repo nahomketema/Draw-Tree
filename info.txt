@@ -1,0 +1,1 @@
+the purpose of this program is to try to draw a binary search tree instead of listing the elements
