@@ -25,12 +25,15 @@ void bst::caller(){
 	char c;
 	do{
 		cout<<"Pick an option below. Note that this program only works with positive numbers for now."<<endl;
+        cout<<"         - Works best when tree height is less than 4. Try sample data to see that"<<endl;
+        cout<<"**************************************************************************************"<<endl;
 		cout<<"1. Input data manually"<<endl;
 		cout<<"2. Input random data"<<endl;
-		cout<<"3. Display data sorted(Traditional)"<<endl;
-		cout<<"4. Display organized(Modern)"<<endl;
-		cout<<"5. Delete certain value(all matches)"<<endl;
-		cout<<"6. Exit"<<endl;
+        cout<<"3. Input sample data"<<endl;
+		cout<<"4. Display data sorted(Traditional)"<<endl;
+		cout<<"5. Display organized(Modern)"<<endl;
+		cout<<"6. Delete certain value(all matches)"<<endl;
+		cout<<"7. Exit"<<endl;
 		cin>>c;
 		if(c == '1'){
 			int number;
@@ -46,19 +49,6 @@ void bst::caller(){
 			}
 		}	
 		else if(c == '2'){//realized that there is no good way to represent a lot of data on the terminal so i preset the amount of random data to 10
-			/*
-			int number;
-			cout<<"Please input how many data you want to insert to the tree: ";
-			cin>>number;
-			cin.ignore(100,'\n');
-			int retval = insert_random_data(number);
-			if(retval == 0){
-				cout<<"The random numbers have been inserted to the tree."<<endl;
-			}
-			else{
-				cout<<"Something wrong happened. Please try again."<<endl;
-			}
-			*/
 			int retval = insert_random_data(10);
 			if(retval == 0){
 				cout<<"Ten random numbers have been inserted to the tree."<<endl;
@@ -67,13 +57,16 @@ void bst::caller(){
 				cout<<"Something wrong happened. Please try again."<<endl;
 			}
 		}
-		else if(c == '3'){
+        else if(c == '3'){
+            sample_data();
+        }
+		else if(c == '4'){
 			display_traditional();
 		}
-		else if(c == '4'){
+		else if(c == '5'){
 			display_new();
 		}
-		else if(c == '5'){
+		else if(c == '6'){
 			int number;
 			cout<<"Please input the data you want to remove from the tree: ";
 			cin>>number;
@@ -85,13 +78,13 @@ void bst::caller(){
 				cout<<"The number you were looking for was not found. Please try again."<<endl;
 			}
 		}
-		else if(c == '6'){
+		else if(c == '7'){
 			cout<<"Program Terminated."<<endl;
 		}
 		else{
 			cout<<"Invalid input. Please try again."<<endl;
 		}
-	}while(c != '6');
+	}while(c != '7');
 }
 
 int bst::insert(int data){
@@ -163,17 +156,14 @@ int bst::count(node*& root){
 
 int bst::display_new(){
 	int tree_height = height();
-	//cout<<"Height: "<<tree_height<<endl;
 	for(int k=0; k<tree_height; ++k){
 		int level = k;
 		int* tmp = array_by_level(level);
 		int square = pow(2,level);
-		//cout<<"Level: "<<level<<endl;
 		for(int i=0; i<square; ++i){
 			int character_count = number_of_characters();
 			if(i == 0){
 				string space(character_count * (pow(2, tree_height - 1 - level)-1),' ');
-				//cout<<"space length: "<<space.length()<<endl;
 				if(tmp[i] != -1){
 					char* printable_number = to_maximum(tmp[i]);
 					cout<<space<<printable_number;
@@ -186,7 +176,6 @@ int bst::display_new(){
 			}
 			else{
 				string space(character_count * (pow(2, tree_height - level)-1),' ');
-				//cout<<"space length: "<<space.length()<<endl;
 				if(tmp[i] != -1){
 					char* printable_number = to_maximum(tmp[i]);
 					cout<<space<<printable_number;
@@ -197,7 +186,6 @@ int bst::display_new(){
 					cout<<space<<num_space;
 				}
 			}
-			//cout<<tmp[i]<<" ";
 		}
 		cout<<"\n"<<endl;
 		delete [] tmp;
@@ -247,19 +235,14 @@ int bst::delete_node(node*& root, int value){//double check whether the return v
 			delete root;
 			root = NULL;
 		}
-		if((root->right == NULL) && (root->left != NULL)){
+        else if((root->right == NULL) && (root->left != NULL)){
 			node* tmp = root->left;//It doesn't matter if it is null or not
 			delete root;
 			root = tmp;
 		}
-		else if((root->right != NULL) && (root->left == NULL)){
-			node* tmp = root->right;
-			delete root;
-			root = tmp;
-			delete_node(root, value);//In case of duplicate data
-		}
 		else{
 			root->data = in_order_successor(root->right);
+		    delete_node(root, value);//In case of duplicate data
 		}
 		return 0;
 	}
@@ -316,7 +299,6 @@ void bst::array_by_level(node*& root, int current_height, int start_index, int l
 			int start = start_index*how_many_zeroes;
 			int end = start + how_many_zeroes;
 			while(start < end){
-				//cout<<counter<<endl;
 				data[start] = -1;
 				++start;
 			}
@@ -342,4 +324,15 @@ int bst::insert_random_data(int count){
 		}
 	}
 	return 0;
+}
+
+void bst::sample_data(){
+    delete_tree(root);
+    insert(50);
+    insert(25);
+    insert(75);
+    insert(12);
+    insert(37);
+    insert(63);
+    insert(87);
 }

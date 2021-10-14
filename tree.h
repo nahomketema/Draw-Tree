@@ -30,6 +30,7 @@ class bst{
 		int number_of_characters();
 		int* array_by_level(int level);
 		int insert_random_data(int count);
+        void sample_data();
 		char* to_maximum(int data);
 		// The functions below are going to be used as wrapper functions for the recursive functions
 		int number_of_characters(node*& root);//This returns the number of characters of the largest number
@@ -44,6 +45,8 @@ class bst{
 		node* root;
 };
 /*
+ * To print \ you need to print a \\
+ * Example below:
 cout<<"      21000   "<<endl;
 cout<<"     /     \\  "<<endl;
 cout<<"12          52000"<<endl;
