@@ -226,6 +226,7 @@ int bst::delete_tree(node*& root){
 	delete_tree(root->left);
 	if((root->left == NULL) && (root->right == NULL)){
 		delete root;
+        root = NULL;
 	}
 	return 0;
 }
