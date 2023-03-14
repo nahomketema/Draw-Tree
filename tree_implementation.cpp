@@ -30,8 +30,8 @@ void bst::caller(){
 		cout<<"1. Input data manually"<<endl;
 		cout<<"2. Input random data"<<endl;
         cout<<"3. Input sample data"<<endl;
-		cout<<"4. Display data sorted(Traditional)"<<endl;
-		cout<<"5. Display organized(Modern)"<<endl;
+		cout<<"4. Display data sorted(Old)"<<endl;
+		cout<<"5. Display organized(New)"<<endl;
 		cout<<"6. Delete certain value(all matches)"<<endl;
 		cout<<"7. Exit"<<endl;
 		cin>>c;
